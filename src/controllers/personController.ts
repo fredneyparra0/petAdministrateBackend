@@ -62,8 +62,42 @@ async function deletePersonById (req:Request, res:Response) {
     }
 }
 
+async function findById (req:Request, res:Response) {
+    try {
+        const findPerson = await modelPerson.findById(req.params.id).populate('pets');
+        res.send({
+            data: findPerson,
+            error: false
+        });
+    } catch (err) {
+        console.log(err);
+        res.send({
+            data: null,
+            error: true
+        })
+    }
+}
+
+async function findByIdAndUpadte (req:Request, res:Response) {
+    try {
+        const personUpdated = await modelPerson.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.send({
+            data: personUpdated,
+            error: false
+        });
+    } catch (err) {
+        console.log(err);
+        res.send({
+            data: null,
+            error: true
+        })
+    }
+}
+
 export {
     createPerson,
     findAll,
-    deletePersonById
+    deletePersonById,
+    findById,
+    findByIdAndUpadte
 }

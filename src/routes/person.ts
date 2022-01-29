@@ -1,17 +1,15 @@
 import { Router } from 'express';
-import { createPerson, findAll, deletePersonById } from '../controllers/personController';
-import { createPet, findByTerm } from '../controllers/petsController';
+import { createPerson, findAll, deletePersonById, findById, findByIdAndUpadte } from '../controllers/personController';
 
+export const routerPerson:Router = Router();
 
+routerPerson.post('/create', createPerson);
 
-export const router:Router = Router();
+routerPerson.get('/getAll', findAll);
 
-router.post('/person', createPerson);
+routerPerson.get('/get/:id', findById);
 
-router.get('/person', findAll);
+routerPerson.put('/update/:id', findByIdAndUpadte);
 
-router.delete('/person/:id', deletePersonById);
+routerPerson.delete('/delete/:id', deletePersonById);
 
-router.post('/pet', createPet);
-
-router.get('/petByTerm/:term', findByTerm);
