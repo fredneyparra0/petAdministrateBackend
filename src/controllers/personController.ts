@@ -94,10 +94,30 @@ async function findByIdAndUpadte (req:Request, res:Response) {
     }
 }
 
+async function filterPerson (req:Request, res:Response) {
+    try {
+        const expression = new RegExp(req.params.term, "i")
+        const resFilter = await modelPerson.aggregate([
+            { $match: { name: expression } }
+        ]);
+        res.send({
+            data: resFilter,
+            error: false
+        });
+    } catch (err) {
+        console.log(err);
+        res.send({
+            data: null,
+            error: true
+        })
+    }
+}
+
 export {
     createPerson,
     findAll,
     deletePersonById,
     findById,
-    findByIdAndUpadte
+    findByIdAndUpadte,
+    filterPerson
 }
